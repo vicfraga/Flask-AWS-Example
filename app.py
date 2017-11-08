@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash
 from flask_wtf import Form
 from flask_wtf.file import FileField
-from tools import s3_upload
+from s3 import s3_upload
 
 app = Flask(__name__)
 app.config.from_object('config')
