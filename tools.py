@@ -9,8 +9,8 @@ def s3_upload(source_file, upload_dir=None, acl='public-read'):
     """ Uploads WTForm File Object to Amazon S3
 
         Expects following app.config attributes to be set:
-            S3_KEY              :   S3 API Key
-            S3_SECRET           :   S3 Secret Key
+            AWS_KEY             :   S3 API Key
+            AWS_SECRET          :   S3 Secret Key
             S3_BUCKET           :   What bucket to upload to
             S3_UPLOAD_DIRECTORY :   Which S3 Directory.
 
@@ -29,7 +29,7 @@ def s3_upload(source_file, upload_dir=None, acl='public-read'):
     destination_filename = uuid4().hex + source_extension
 
     # Connect to S3 and upload file.
-    conn = boto.connect_s3(app.config["S3_KEY"], app.config["S3_SECRET"])
+    conn = boto.connect_s3(app.config["AWS_KEY"], app.config["AWS_SECRET"])
     b = conn.get_bucket(app.config["S3_BUCKET"])
 
     sml = b.new_key("/".join([upload_dir, destination_filename]))
