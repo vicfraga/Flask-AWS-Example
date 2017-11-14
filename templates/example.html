@@ -3,6 +3,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </HEAD>
 
+{% block body %}
+
+<div align="center">
+
 {% with messages = get_flashed_messages() %}
     {% if messages %}
         <ul class=flashes>
@@ -16,6 +20,20 @@
 <form method="POST" enctype="multipart/form-data" action=".">
     {{ form.csrf_token }}
     {{ form.example }}
-    <input type="submit" value="Go">
+    <input type="submit" value="Upload">
 </form>
 
+<br>
+
+<table class=entries>
+  {% for entry_row in entries | batch(4, '&nbsp;') %}
+    <tr>
+    {% for entry in entry_row %}
+      <td><img src="{{ entry.image_url }}" width="240"></img></td>
+    {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
+
+</div>
+{% endblock %}

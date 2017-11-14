@@ -3,7 +3,16 @@ import boto
 import os.path
 from flask import current_app as app
 from werkzeug.utils import secure_filename
+import time
 
+
+def file_base_name(file_name):
+    if '.' in file_name:
+        separator_index = file_name.index('.')
+        base_name = file_name[:separator_index]
+        return base_name
+    else:
+        return file_name
 
 def s3_upload(source_file, upload_dir=None, acl='public-read'):
     """ Uploads WTForm File Object to Amazon S3
@@ -36,4 +45,10 @@ def s3_upload(source_file, upload_dir=None, acl='public-read'):
     sml.set_contents_from_string(source_file.data.read())
     sml.set_acl(acl)
 
-    return destination_filename
+    item = {
+        "image_url": "https://s3.amazonaws.com/" + app.config["S3_BUCKET"] + "/" + destination_filename,
+        "name": file_base_name(destination_filename),
+        "date": int(time.time())
+    }
+
+    return item
