@@ -5,5 +5,3 @@ if [ -n  "$pid" ]
 then
 	kill $pid
 fi
-deactivate
-popd
