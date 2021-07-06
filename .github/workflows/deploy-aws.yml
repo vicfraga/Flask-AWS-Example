@@ -21,6 +21,7 @@ jobs:
               run: |
                 mkdir deployment
                 rsync -Rr . deployment
+                echo -e 'import os\nAWS_KEY = "${{ secrets.ACCESS_KEY_ID }}"\nAWS_SECRET = "${{ secrets.SECRET_ACCESS_KEY }}"\nAWS_SESSION = "${{ secrets.SESSION_TOKEN }}"\nS3_BUCKET = "${{ secrets.S3_BUCKET }}"\nSECRET_KEY = os.urandom(32)\nDEBUG = False\nPORT = 5000' > deployment/config.py
                 zip -r aplicacao-infraTI.zip deployment
                 aws s3 cp aplicacao-infraTI.zip s3://${{ secrets.S3_BUCKET }}/
 
